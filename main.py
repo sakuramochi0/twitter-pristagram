@@ -79,9 +79,9 @@ if __name__ == '__main__':
     engine = create_engine(settings['database_path'])
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger('twitter_prism_gram')
-    for screen_name in reversed(settings['screen_names']):
+    for screen_name in settings['screen_names']:
         logger.info('fetching user: {}'.format(screen_name))
         name, ids = parse_name_and_ids(screen_name)
         logger.info('ids: {}'.format(ids))
-        for id in ids:
+        for id in reversed(ids):
             tweet(name, screen_name, id)
