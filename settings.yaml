@@ -1,5 +1,7 @@
 database_path: 'sqlite:///db.sqlite3'
 screen_names:
+  # kinpri
+  - yanpri_pr
   # prettyrhythm
   - hishidamasakazu
   - sayaka_toda_
