@@ -41,6 +41,8 @@ def decode_json_string(string):
 def parse_name_and_ids(screen_name: str) -> [str]:
     url = 'https://www.instagram.com/{user_name}/'.format(user_name=screen_name)
     r = requests.get(url)
+    if not r.ok:
+        return (None, None)
     ids = re.findall(r'"code": ?"([^"]+)"', r.text)
     full_name = re.search(r'"full_name": ?"([^"]+)"', r.text).group(1)
     full_name = decode_json_string(full_name)
@@ -82,6 +84,9 @@ if __name__ == '__main__':
     for screen_name in settings['screen_names']:
         logger.info('fetching user: {}'.format(screen_name))
         name, ids = parse_name_and_ids(screen_name)
+        if name == None and ids == None:
+            logger.error('not found: {}'.format(screen_name))
+            continue
         logger.info('ids: {}'.format(ids))
         for id in reversed(ids):
             tweet(name, screen_name, id)
